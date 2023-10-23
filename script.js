@@ -42,10 +42,10 @@ function playRound(playerSelection, computerSelection) {
 
   }
    
-  const playerSelection = "rock";
-  const computerSelection = getComputerChoice();
+  const playerSelection = "scissor";
+  const computerSelection = getComputerChoice(choice);
  
 
-
-  console.log(getComputerChoice(choice))
+  console.log(playerSelection)
+  console.log(computerSelection)
   console.log(playRound(playerSelection, computerSelection))
