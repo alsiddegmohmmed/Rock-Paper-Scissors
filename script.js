@@ -1,51 +1,93 @@
 
-const choice = ['rock', 'paper', 'scissor']
+const options = ['rock', 'paper', 'scissor']
 
 function getComputerChoice(a) {
-  const randomChoiceIndex = Math.floor(Math.random() * choice.length)
-  const randomChoice = choice[randomChoiceIndex]
+  const randomChoiceIndex = Math.floor(Math.random() * options.length)
+  const randomChoice = options[randomChoiceIndex];
     return randomChoice;
 }
 
+// casses where the player will win : 
+// rock ---- sicsser 
+// paper -- rock 
+// sicosser -- paper 
+
+function checkWinner (playerSelection, computerSelection) {
+    if (playerSelection == computerSelection) {
+        return "Tie";
+    }
+    else if((playerSelection == 'rock'&& computerSelection == "scissor")
+    || (playerSelection == 'paper' && computerSelection == 'rock')
+    || (playerSelection == 'scissor' && computerSelection == 'paper')
+    ){
+        return "player";
+    } 
+    else {
+        return "computer";
+    }
+}
+
+
 
 function playRound(playerSelection, computerSelection) {
-    // your code here!
-    // if a and b are equal
-    // print draw
-    // else if a < b 
-    // b is the winner 
-    // else a is the winner 
-    // rock vs rock--------------
-    // paper vs paper --------
-    // scissor vs scissor ----------
-    // rock vs paper ----------
-    // rock vs scissor ---------
-    // paper vs rock -----
-    // scissor vs paper
-    // paper vs scissor 
-    // scissor vs rock 
-
-
-    if (playerSelection == computerSelection) {
-       return console.log("DRAW");
-    }else if (playerSelection == 'rock' && computerSelection == "paper") {
-        return  console.log('the computer paper has beaten your rock ');
-    }else if (playerSelection == 'rock' && computerSelection== 'scissor') {
-        return console.log("Your rock has crushed the computer scissor ");
-    }else if (playerSelection == 'paper' && computerSelection== 'rock') {
-        return console.log("Your paper has crushed computer rock");
-    }else if (playerSelection == 'scissor' && computerSelection== 'paper') {
-        return  console.log("player scissor has won");
-    } else {
-        return console.log("a win for the computer ")
+    const result = checkWinner (playerSelection, computerSelection); 
+    if( result == 'Tie') {
+        return "it's a Tie!"
+    } 
+    else if (result == "player") {
+        return `your ${playerSelection} has crushed the computer ${computerSelection}`
+    } 
+    else {
+        return `the computer ${computerSelection} has crushed your ${playerSelection}`
     }
+    
+}
 
-  }
-   
-  const playerSelection = "scissor";
-  const computerSelection = getComputerChoice(choice);
- 
+function getPleyerChoice () {
+    let validatedInput = false; 
+    while (validatedInput == false) {
+        const choice = prompt("Rock Paper Scissors"); 
+        if(choice == null ) {
+            continue;
+        }
+        const choiceInLower = choice.toLocaleLowerCase();
+        if(options.includes(choiceInLower)) {
+            validatedInput = true; 
+            return choiceInLower; 
+        }
 
-  console.log(playerSelection)
-  console.log(computerSelection)
-  console.log(playRound(playerSelection, computerSelection))
+        
+    }
+}
+
+
+
+function game() {
+    let scorePlayer = 0; 
+    let scoreComputer = 0; 
+    console.log('welcome!'); 
+    for(let i = 0; i < 5 ; i++){
+        const playerSelection = getPleyerChoice(); 
+        const computerSelection = getComputerChoice(); 
+        console.log(playRound(playerSelection, computerSelection)); 
+        console.log("----------------------------");
+        if (checkWinner(playerSelection, computerSelection) == "player") {
+            scorePlayer ++; 
+        } else if (checkWinner(playerSelection, computerSelection) == "computer") {
+            scoreComputer++; 
+        }
+    }
+    console.log("game Over");
+
+    if (scorePlayer > scoreComputer) {
+         console.log('player was the winner');
+        
+    } else if (scorePlayer < scoreComputer ) {
+        console.log('computer has won');
+    } else {
+        console.log('its a tie ');
+    }
+}
+
+
+game() ; 
